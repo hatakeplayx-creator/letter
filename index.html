@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Letter</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f7f3f0;
+      font-family: 'Helvetica Neue', sans-serif;
+      overflow: hidden;
+    }
+
+    .envelope-container {
+      position: relative;
+      width: 300px;
+      height: 220px;
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+
+    .envelope-container.opened {
+      transform: translateY(-40px);
+    }
+
+    .envelope {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flap {
+      width: 100%;
+      height: 60%;
+      background: #eee;
+      position: absolute;
+      top: 0;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform 1s ease;
+    }
+
+    .envelope-container.opened .flap {
+      transform: rotateX(180deg);
+    }
+
+    .letter {
+      position: absolute;
+      width: 90%;
+      left: 5%;
+      top: 55%;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 1.2s ease;
+      white-space: pre-wrap;
+    }
+
+    .envelope-container.opened .letter {
+      opacity: 1;
+      transform: translateY(-40px);
+    }
+
+    .heart {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #ff5d88;
+      transform: rotate(45deg);
+      animation: float 4s linear infinite;
+      opacity: 0.7;
+      border-radius: 4px;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #ff5d88;
+      border-radius: 50%;
+    }
+
+    .heart:before {
+      top: -9px;
+      left: 0;
+    }
+
+    .heart:after {
+      left: -9px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-180px) rotate(45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="envelope-container" id="env">
+    <div class="envelope">
+      <div class="flap"></div>
+      <div class="letter">
+I don’t know exactly when it happened, but somewhere between our random conversations, your little jokes, and the way you say the simplest things with so much warmth… you became someone I can’t imagine my days without.
+
+You’ve slipped into my life so quietly and beautifully that now everything feels a little empty if I don’t share it with you.
+
+I love the way you understand me without me explaining, the way you make me feel calm even on the worst days, and the way your presence makes the world feel softer.
+
+You’re not just someone I care about—you’re someone I want to protect, cherish, and grow with.
+
+You’re the reason I smile at my phone like a fool, the reason I feel excited for tomorrow, and the reason my heart feels fuller than it ever has.
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgm" src="music.mp3"></audio>
+
+  <script>
+    const env = document.getElementById('env');
+    const bgm = document.getElementById('bgm');
+
+    env.addEventListener('click', () => {
+      env.classList.toggle('opened');
+      bgm.play().catch(() => {});
+    });
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.bottom = '-20px';
+      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+    setInterval(createHeart, 400);
+  </script>
+</body>
+</html>
